@@ -1,7 +1,23 @@
-"development": {
-  "username": "postgres",
-  "password": "Cesarta01",
-  "database": "control_acceso_db",
-  "host": "IP_pública_de_tu_instancia",
-  "dialect": "postgres"
+{
+  "development": {
+    "username": "postgres",
+    "password": "Cesarta01",
+    "database": "control_acceso_db",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "Cesarta01",
+    "database": "control_acceso_db_test",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "postgres",
+    "password": "Cesarta01",
+    "database": "control_acceso_db",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
 }
