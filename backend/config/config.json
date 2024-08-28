@@ -1,0 +1,7 @@
+"development": {
+  "username": "postgres",
+  "password": "Cesarta01",
+  "database": "control_acceso_db",
+  "host": "IP_pública_de_tu_instancia",
+  "dialect": "postgres"
+}
