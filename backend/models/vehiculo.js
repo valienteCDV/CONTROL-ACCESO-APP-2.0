@@ -1,28 +1,49 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Vehiculo extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Vehiculo.belongsTo(models.Persona, {
+        foreignKey: 'persona_id',
+        as: 'propietario'
+      });
+      Vehiculo.hasMany(models.Registro, {
+        foreignKey: 'vehiculo_id',
+        as: 'registros'
+      });
+      Vehiculo.hasMany(models.Carga, {
+        foreignKey: 'vehiculo_id',
+        as: 'cargas'
+      });
     }
   }
   Vehiculo.init({
-    patente: DataTypes.STRING,
+    patente: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
     marca: DataTypes.STRING,
     modelo: DataTypes.STRING,
-    persona_id: DataTypes.INTEGER,
-    sin_patente: DataTypes.BOOLEAN,
+    persona_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    sin_patente: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
     observaciones: DataTypes.TEXT,
-    es_activo: DataTypes.BOOLEAN,
+    es_activo: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    },
     foto_url: DataTypes.STRING,
-    es_vehiculo_peligroso: DataTypes.BOOLEAN
+    es_vehiculo_peligroso: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
   }, {
     sequelize,
     modelName: 'Vehiculo',

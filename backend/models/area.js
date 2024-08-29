@@ -1,26 +1,29 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+// backend/src/models/Area.js
+const { Model, DataTypes } = require('sequelize');
+
+module.exports = (sequelize) => {
   class Area extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Area.belongsTo(models.Instalacion, { foreignKey: 'instalacion_id' });
+      Area.hasMany(models.Autorizacion, { foreignKey: 'area_id' });
+      Area.hasMany(models.Registro, { foreignKey: 'area_id' });
     }
   }
+  
   Area.init({
-    nombre: DataTypes.STRING,
-    descripcion: DataTypes.STRING,
-    instalacion_id: DataTypes.INTEGER,
-    es_zona_peligrosa: DataTypes.BOOLEAN
+    nombre: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    descripcion: DataTypes.TEXT,
+    es_zona_peligrosa: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
   }, {
     sequelize,
     modelName: 'Area',
   });
+  
   return Area;
 };

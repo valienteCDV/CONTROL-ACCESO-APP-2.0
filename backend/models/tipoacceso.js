@@ -1,24 +1,23 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+// backend/src/models/TipoAcceso.js
+const { Model, DataTypes } = require('sequelize');
+
+module.exports = (sequelize) => {
   class TipoAcceso extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      TipoAcceso.hasMany(models.Registro, { foreignKey: 'tipo_acceso_id' });
     }
   }
+  
   TipoAcceso.init({
-    nombre: DataTypes.STRING,
-    descripcion: DataTypes.STRING
+    nombre: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    descripcion: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'TipoAcceso',
   });
+  
   return TipoAcceso;
 };
