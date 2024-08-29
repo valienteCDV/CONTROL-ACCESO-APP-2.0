@@ -1,25 +1,27 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+// backend/src/models/TipoCarga.js
+const { Model, DataTypes } = require('sequelize');
+
+module.exports = (sequelize) => {
   class TipoCarga extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      TipoCarga.hasMany(models.Carga, { foreignKey: 'tipo_carga_id' });
     }
   }
+  
   TipoCarga.init({
-    nombre: DataTypes.STRING,
-    es_peligrosa: DataTypes.BOOLEAN,
+    nombre: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    es_peligrosa: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
     codigo_un: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'TipoCarga',
   });
+  
   return TipoCarga;
 };

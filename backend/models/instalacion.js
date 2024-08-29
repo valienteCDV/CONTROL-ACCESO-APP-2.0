@@ -1,28 +1,34 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+// backend/src/models/Instalacion.js
+const { Model, DataTypes } = require('sequelize');
+
+module.exports = (sequelize) => {
   class Instalacion extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Instalacion.belongsTo(models.Empresa, { foreignKey: 'empresa_id' });
+      Instalacion.hasMany(models.Area, { foreignKey: 'instalacion_id' });
+      Instalacion.hasMany(models.Usuario, { foreignKey: 'instalacion_id' });
     }
   }
+  
   Instalacion.init({
-    nombre: DataTypes.STRING,
+    nombre: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     tipo: DataTypes.STRING,
     direccion: DataTypes.STRING,
-    empresa_id: DataTypes.INTEGER,
-    maneja_vehiculos: DataTypes.BOOLEAN,
-    maneja_cargas_peligrosas: DataTypes.BOOLEAN
+    maneja_vehiculos: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    },
+    maneja_cargas_peligrosas: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
+    }
   }, {
     sequelize,
     modelName: 'Instalacion',
   });
+  
   return Instalacion;
 };

@@ -1,20 +1,27 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Rol extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Rol.belongsToMany(models.Usuario, {
+        through: 'UsuarioRoles',
+        as: 'usuarios',
+        foreignKey: 'rol_id'
+      });
+      Rol.belongsToMany(models.Permiso, {
+        through: 'RolPermisos',
+        as: 'permisos',
+        foreignKey: 'rol_id'
+      });
     }
   }
   Rol.init({
-    nombre: DataTypes.STRING,
+    nombre: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true
+    },
     descripcion: DataTypes.STRING
   }, {
     sequelize,

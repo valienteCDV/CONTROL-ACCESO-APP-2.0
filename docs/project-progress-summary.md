@@ -40,7 +40,8 @@
 - Las migraciones se han ejecutado correctamente, creando todas las tablas necesarias.
 - El proyecto está listo para comenzar con el desarrollo de la lógica de negocio y las interfaces de usuario.
 
-commit 
+commit 2369eb46b0526f14e3ab44127041e8ec6c936c91
+
 
 ## Próximos Pasos Previstos
 1. Implementar la lógica de autenticación y autorización.

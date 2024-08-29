@@ -1,29 +1,27 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
-module.exports = (sequelize, DataTypes) => {
+// backend/src/models/Autorizacion.js
+const { Model, DataTypes } = require('sequelize');
+
+module.exports = (sequelize) => {
   class Autorizacion extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
-      // define association here
+      Autorizacion.belongsTo(models.Persona, { foreignKey: 'persona_id' });
+      Autorizacion.belongsTo(models.Area, { foreignKey: 'area_id' });
+      Autorizacion.belongsTo(models.Usuario, { foreignKey: 'autorizado_por', as: 'autorizador' });
     }
   }
+  
   Autorizacion.init({
-    persona_id: DataTypes.INTEGER,
-    area_id: DataTypes.INTEGER,
     fecha_desde: DataTypes.DATE,
     fecha_hasta: DataTypes.DATE,
-    autorizado_por: DataTypes.INTEGER,
     fecha_autorizacion: DataTypes.DATE,
-    activa: DataTypes.BOOLEAN
+    activa: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true
+    }
   }, {
     sequelize,
     modelName: 'Autorizacion',
   });
+  
   return Autorizacion;
 };
